@@ -22,7 +22,6 @@ public class ProductSorterImpl implements ProductSorter<Product> {
         return pointTransformers.stream ()
                 .map (fun -> fun.derivePoint (product.getTitle (),wordToSearch))
                 .mapToDouble (Number::doubleValue)
-                .peek (score -> System.out.println ("score of product: " + product.getId () + " is: " + score))
                 .sum () * product.getCategory ().getPriority();
     }
 
@@ -30,8 +29,8 @@ public class ProductSorterImpl implements ProductSorter<Product> {
         return products.stream ()
                 .filter (product -> !product.getTitle ().isEmpty ())
                 .map (product -> new SorterResult (product,calculate (product)))
-                .peek (score -> System.out.println ("total score of product: " + score.getProduct ().getId () + " is: " + score.getScore ()))
                 .sorted (comparingDouble (SorterResult::getScore).reversed ())
+                .filter (sorterResult -> sorterResult.getScore () != 0)
                 .collect(Collectors.toList());
     }
 

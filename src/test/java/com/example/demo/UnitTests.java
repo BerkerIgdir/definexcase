@@ -39,6 +39,8 @@ class UnitTests {
 
     private final ProductToIndex<Double> indexer2 = (prod,wordToSearch) ->
             Optional.ofNullable (prod)
+//                    .map (String::toUpperCase)
+//                    .filter (title -> title.contains (wordToSearch))
                     .map (title -> title.split (" "))
                     .map (str -> 100 * 1.0/str.length)
                     .orElseGet (() -> ((double) 0));
@@ -50,10 +52,10 @@ class UnitTests {
 
     private final ProductToIndex<Double> multiWordIndexer = (prodTitle,wordToSearch) ->
             Optional.of (prodTitle)
-                    .filter (title -> title.contains (wordToSearch))
+//                    .map (String::toUpperCase)
+//                    .filter (title -> title.contains (wordToSearch))
                     .map (title -> helperMethod (title, wordToSearch.split (" ")[0]))
-                    .orElseGet (() -> demoLambda.apply (Arrays.asList (wordToSearch.split (" ")),prodTitle));
-
+                    .orElse (0.0);
 
 
     private double helperMethod(String title, String wordToSearch){
@@ -62,8 +64,25 @@ class UnitTests {
                 .filter(ind-> wordToSearch.equalsIgnoreCase (tokens[ind]))
                 .findFirst()
                 .orElseGet (()-> -1);
-
+        if(index == -1 && wordToSearch.split (" ").length > 1){
+            return Arrays.stream (wordToSearch.split (" "))
+                    .mapToDouble (tkn -> helperMethod (title,tkn))
+                    .sum ();
+        }
         return index == -1 ? 0.0 : 100.0 /(index +1);
+    }
+    private double wordWeightBusinessLogic(String title, String wordToSearch){
+        if(!title.contains (wordToSearch)) {
+            if (wordToSearch.split (" ").length > 1) {
+                return Arrays.stream (wordToSearch.split (" "))
+                        .mapToDouble (tkn -> wordWeightBusinessLogic (title , tkn))
+                        .sum ();
+            }
+            return 0.0;
+        }
+
+        var tokens = title.split (" ");
+        return  100 * (wordToSearch.split (" ").length / (double)tokens.length);
     }
 
     @BeforeEach
@@ -78,11 +97,12 @@ class UnitTests {
         productList.add (product1);
         productList.add (product2);
         productList.add (product3);
+        productList.add (product4);
     }
 
     @Test
     void sorterTest(){
-        var wordToSearch = "11 Blackberry";
+        var wordToSearch = "bLackBerry 12";
         var functionList = Arrays.asList (multiWordIndexer,indexer2);
         var sorter = new ProductSorterImpl (wordToSearch,functionList);
         var result = sorter.sort (productList)
