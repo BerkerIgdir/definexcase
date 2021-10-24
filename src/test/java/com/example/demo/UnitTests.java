@@ -32,10 +32,10 @@ class UnitTests {
                     var index = IntStream.range(0, tokens.length)
                             .filter(ind-> wordToSearch.equalsIgnoreCase (tokens[ind]))
                             .findFirst()
-                            .orElseGet (()-> -1);
+                            .orElse (-1);
 
                     return index == -1 ? null : 100.0 /(index +1);
-                }).orElseGet (() -> 0.0);
+                }).orElseGet (() -> (double) 0);
 
     private final ProductToIndex<Double> indexer2 = (prod,wordToSearch) ->
             Optional.ofNullable (prod)

@@ -25,6 +25,7 @@ public class ProductSorterImpl implements ProductSorter<Product> {
                 .sum () * product.getCategory ().getPriority();
     }
 
+    //This method may be parallelized in case of a performance need.
     public List<SorterResult> sort(final List<Product> products){
         return products.stream ()
                 .filter (product -> !product.getTitle ().isEmpty ())

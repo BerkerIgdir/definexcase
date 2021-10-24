@@ -11,7 +11,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
-import java.util.function.BiFunction;
 import java.util.stream.IntStream;
 
 import static java.util.stream.Collectors.toList;
@@ -20,10 +19,6 @@ import static java.util.stream.Collectors.toList;
 public class IndexerService {
 
     private final ProductRepo productRepo;
-    private final BiFunction<List<String>,String,Double> wordPlaceIndexerMultiWordApplier = (list, title) ->
-            list.stream ()
-                    .mapToDouble (str -> wordPlaceIndexerBusinessLogic(title,str))
-                    .sum ();
 
     private final ProductToIndex<Double> wordWeightIndexer = (prodTitle, wordToSearch) ->
             Optional.of (prodTitle)
