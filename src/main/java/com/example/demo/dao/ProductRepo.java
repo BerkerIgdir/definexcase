@@ -17,11 +17,11 @@ public class ProductRepo {
     static{
         var accessoryCategory = new Category(CategoryLevel.FOUR,"accessory");
         var cellPhoneCategory = new Category(CategoryLevel.TWO,"cellphone");
-        var product1 = new Product(1L,"IPhone 11 Spingen Mavi Pro Max Kilif",accessoryCategory,true);
+        var product1 = new Product(1L,"My Iphone Spingen Mavi Pro Max Kilif",accessoryCategory,true);
         var product2 = new Product(2L,"IPhone 11 128 GB Cep telefonu",cellPhoneCategory,true);
         var product3 = new Product(3L,"IPhone 11 Pro Max Silikon Siyah Kilif",accessoryCategory,true);
         var product4 = new Product(4L,"Blackberry 11 Spingen Mavi Pro Max Kilif",accessoryCategory,true);
-        var product5 = new Product(5L,"IPhone 11 Spingen Mavi Pro Max Kilif",accessoryCategory,false);
+        var product5 = new Product(5L,"Blue Iphone Spingen Mavi Pro Max Kilif",accessoryCategory,false);
         productList.add(product1);
         productList.add(product2);
         productList.add(product3);

@@ -5,6 +5,8 @@ import com.example.demo.business.sorter.ProductSorterImpl;
 import com.example.demo.business.sorter.ProductToIndex;
 import com.example.demo.business.sorter.SorterResult;
 import com.example.demo.dao.ProductRepo;
+import com.example.demo.util.QueryWordRectifierUtil;
+
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
@@ -38,6 +40,8 @@ public class IndexerService {
 
     public List<Product> index(String wordToSearch){
         wordToSearch = wordToSearch.toUpperCase(Locale.ROOT);
+        wordToSearch = QueryWordRectifierUtil.checkAndGetIfMissSpelled (wordToSearch)
+                .orElse (wordToSearch);
         var functionList = Arrays.asList (wordPlaceIndexer,wordWeightIndexer);
         var sorter = new ProductSorterImpl (wordToSearch,functionList);
         var productList =productRepo.getAllProducts();
