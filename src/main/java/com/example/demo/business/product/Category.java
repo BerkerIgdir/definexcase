@@ -1,9 +1,9 @@
-package com.example.demo.business;
+package com.example.demo.business.product;
 
 import com.example.demo.business.enums.CategoryLevel;
 
 public class Category {
-    private final CategoryLevel categoryLevel;
+    private CategoryLevel categoryLevel;
     private String categoryName;
 
     public Category (CategoryLevel categoryLevel , String categoryName) {

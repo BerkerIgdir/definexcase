@@ -1,7 +1,7 @@
 package com.example.demo.business.sorter;
 
 
-import com.example.demo.business.Product;
+import com.example.demo.business.product.Product;
 
 public final class SorterResult {
     private final Product product;

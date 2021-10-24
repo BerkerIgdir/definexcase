@@ -1,4 +1,4 @@
-package com.example.demo.business;
+package com.example.demo.business.sorter;
 
 @FunctionalInterface
 public interface ProductToIndex<T extends Number> {

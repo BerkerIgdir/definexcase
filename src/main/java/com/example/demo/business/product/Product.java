@@ -1,4 +1,4 @@
-package com.example.demo.business;
+package com.example.demo.business.product;
 
 
 import java.util.Objects;
@@ -7,6 +7,15 @@ public class Product {
     private long id;
     private String title;
     private Category category;
+
+    public Product(long id, String title, Category category, boolean isActive) {
+        this.id = id;
+        this.title = title;
+        this.category = category;
+        this.isActive = isActive;
+    }
+
+    private boolean isActive;
 
 
     public long getId () {
@@ -34,4 +43,11 @@ public class Product {
         this.category = category;
     }
 
+    public void setActive(boolean active) {
+        isActive = active;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
 }

@@ -4,8 +4,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.example.demo.business.Product;
-import com.example.demo.business.ProductToIndex;
+import com.example.demo.business.product.Product;
 
 import static java.util.Comparator.comparingDouble;
 

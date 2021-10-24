@@ -8,16 +8,16 @@ import java.util.function.BiFunction;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import com.example.demo.business.product.Category;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import com.example.demo.business.Category;
-import com.example.demo.business.Product;
+import com.example.demo.business.product.Product;
 import com.example.demo.business.sorter.ProductSorterImpl;
-import com.example.demo.business.ProductToIndex;
+import com.example.demo.business.sorter.ProductToIndex;
 import com.example.demo.business.enums.CategoryLevel;
 import com.example.demo.business.sorter.SorterResult;
 
@@ -28,9 +28,9 @@ class UnitTests {
     private final ProductToIndex<Double> indexer1 = (prod, wordToSearch) ->
             Optional.of (prod)
                 .map (title -> {
-                    var demo = title.split (" ");
-                    var index = IntStream.range(0, demo.length)
-                            .filter(ind-> wordToSearch.equalsIgnoreCase (demo[ind]))
+                    var tokens = title.split (" ");
+                    var index = IntStream.range(0, tokens.length)
+                            .filter(ind-> wordToSearch.equalsIgnoreCase (tokens[ind]))
                             .findFirst()
                             .orElseGet (()-> -1);
 
@@ -57,9 +57,9 @@ class UnitTests {
 
 
     private double helperMethod(String title, String wordToSearch){
-        var demo = title.split (" ");
-        var index = IntStream.range(0, demo.length)
-                .filter(ind-> wordToSearch.equalsIgnoreCase (demo[ind]))
+        var tokens = title.split (" ");
+        var index = IntStream.range(0, tokens.length)
+                .filter(ind-> wordToSearch.equalsIgnoreCase (tokens[ind]))
                 .findFirst()
                 .orElseGet (()-> -1);
 
@@ -68,25 +68,12 @@ class UnitTests {
 
     @BeforeEach
     void init(){
-        var product1 = new Product ();
-        var product2 = new Product ();
-        var product3 = new Product ();
-
-        var category1 = new Category (CategoryLevel.FOUR,"accessory");
-        var category2 = new Category (CategoryLevel.ONE,"cellphone");
-
-
-        product1.setCategory (category1);
-        product1.setTitle ("Iphone 11 blue labeled covered guaranteed");
-        product1.setId (1L);
-
-        product2.setCategory (category1);
-        product2.setTitle ("Iphone 11 labeled covered guaranteed");
-        product2.setId (2L);
-
-        product3.setCategory (category2);
-        product3.setTitle ("Blue BlackBerry 11 labeled covered guaranteed");
-        product3.setId (3L);
+        var accessoryCategory = new Category( CategoryLevel.FOUR,"accessory");
+        var cellPhoneCategory = new Category( CategoryLevel.TWO,"cellphone");
+        var product1 = new Product(1L,"IPhone 11 Spingen Mavi Pro Max Kilif",accessoryCategory,true);
+        var product2 = new Product(2L,"IPhone 11 128 GB Cep telefonu",cellPhoneCategory,true);
+        var product3 = new Product(3L,"IPhone 11 Pro Max Silikon Siyah Kilif",accessoryCategory,true);
+        var product4 = new Product(4L,"Blackberry 11 Spingen Mavi Pro Max Kilif",accessoryCategory,true);
 
         productList.add (product1);
         productList.add (product2);
